@@ -17,12 +17,25 @@ const uri = process.env.MONGO_URL;
 const app = express();
 
 // Allow requests from the frontend origin and enable credentials (cookies)
+const allowedOrigins = [
+  process.env.FRONTEND_ORIGIN,
+  'http://localhost:5174',
+  'http://localhost:5173'
+];
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_ORIGIN || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());

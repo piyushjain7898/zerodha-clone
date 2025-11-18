@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from 'axios';
 import { Link } from "react-router-dom";
 
 const Menu = () => {
@@ -12,6 +12,18 @@ const Menu = () => {
 
   const handleProfileClick = (index) => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
+  };
+
+  const handleLogout = async (e) => {
+    e.stopPropagation();
+    try {
+      await axios.post('http://localhost:3002/logout', {}, { withCredentials: true });
+    } catch (err) {
+      console.error('Logout request failed', err);
+    } finally {
+      // Redirect to frontend project (dev server)
+      window.location.href = 'http://localhost:5174';
+    }
   };
 
   const menuClass = "menu";
@@ -90,9 +102,17 @@ const Menu = () => {
           </li>
         </ul>
         <hr />
-        <div className="profile" onClick={handleProfileClick}>
+        <div className="profile" onClick={handleProfileClick} style={{ position: 'relative', cursor: 'pointer' }}>
           <div className="avatar">ZU</div>
           <p className="username">USERID</p>
+
+          {isProfileDropdownOpen && (
+            <div className="profile-dropdown" style={{ position: 'absolute', right: 0, top: '100%', background: '#fff', border: '1px solid #e6e6e6', padding: '0.5rem', borderRadius: '4px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)', zIndex: 20 }}>
+              <button className="btn" style={{ padding: '6px 10px' }} onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
