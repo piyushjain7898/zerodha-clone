@@ -218,6 +218,40 @@ code {
   margin-top: 5%;
 }
 
+/* Apps grid: responsive layout for app cards */
+.apps-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.app-col {
+  flex: 1 1 calc(33.333% - 1rem);
+  min-width: 220px;
+  box-sizing: border-box;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+@media (max-width: 900px) {
+  .app-col {
+    flex: 1 1 calc(50% - 1rem);
+  }
+}
+
+@media (max-width: 520px) {
+  .app-col {
+    flex: 1 1 100%;
+  }
+}
+
 .col {
   flex-basis: 33%;
 }

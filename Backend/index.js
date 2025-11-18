@@ -19,7 +19,7 @@ const app = express();
 // Allow requests from the frontend origin and enable credentials (cookies)
 app.use(
   cors({
-    origin: process.env.FRONTEND_ORIGIN || 'http://localhost:5174',
+    origin: process.env.FRONTEND_ORIGIN || 'http://localhost:5173',
     credentials: true,
   })
 );
@@ -35,6 +35,10 @@ app.get("/allHoldings", async (req, res) => {
 app.get("/allPositions", async (req, res) => {
   let allPositions = await PositionModel.find({});
   res.json(allPositions);
+});
+app.get("/allOrders", async (req, res) => {
+  let allOrders = await OrderModel.find({});
+  res.json(allOrders);
 });
 app.post("/newOrder", async (req, res) => {
   let newOrder = new OrderModel({
